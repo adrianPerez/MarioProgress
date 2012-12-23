@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Mario Progress</title>
+	<script src="processing-1.4.1.min.js"></script>
+	<style>
+		body { background-color:lightgrey; }
+	</style>
+</head>
+<body>
+	<center>
+	<h1>Mario Progress!</h1>
+	
+	<p>
+		<script type="application/processing" data-processing-target="pjs">
+			/* @pjs preload="m1area1.png"; */
+			PImage img;
+
+			float goal = 0;
+			float currentAmount = 1;
+			float percentage;
+
+			void setup() {
+			  img = loadImage("m1area1.png");
+			  img.resize(img.width/4, img.height/4);
+			  size(img.width,img.height);
+			  percentage = currentAmount/goal;
+			  frameRate(30);
+			  //println(getWordGoal());
+			  //println(getNumberOfWords());
+			}
+
+			void draw() {
+				countit();
+				goal = getWordGoal();
+				currentAmount = getNumberOfWords();
+				percentage = currentAmount/goal;
+				background(240);
+				image(img, 0, 0);
+				strokeWeight(1);
+				stroke(0, 255, 0);
+				fill(0,255,0,255/3);
+				rect(-1,-1,img.width*percentage,img.height+1);
+			}
+		</script>
+		<canvas id="pjs"> </canvas>
+	</p>
+	
+	<script type="application/javascript">
+		function countit(){
+			if (document.wordcount.wordcount2.value == "") {
+				document.wordcount.wordcount3.value=0
+			} else {
+				var formcontent=document.wordcount.wordcount2.value
+				formcontent=formcontent.split(" ")
+				document.wordcount.wordcount3.value=formcontent.length
+			}
+		}
+		function getNumberOfWords() {
+			return document.wordcount.wordcount3.value;
+		}
+		function getWordGoal() {
+			return document.wordcount.wordGoal.value;
+		}
+	</script>
+	
+	<form method="POST" name="wordcount">
+		<p>
+			See your writing progress as you approach your <input type="text" name="wordGoal" size="10" placeholder="word count"> goal. Write your story below.</br>
+			<textarea rows="12" name="wordcount2" cols="70" wrap="virtual"></textarea>
+		</p>
+		<div id="onee" style="display:none">
+			<p>
+				<input type="button" value="Calculate Words" onClick="countit()">
+				<input type="text" name="wordcount3" size="20">
+			</p>
+		</div>
+		
+	</form>
+	
+	<small>
+	<p>
+		Created by Adrian Perez. <a href="mailto:primevector@gmail.com">Email</a>
+		 / 
+		Image compiled by Jon Leung. <a href="mailto:jonathanleung314@hotmail.com">Email</a>
+		 / 
+		Any images and sounds are property of Nintendo.
+	</p>
+	</small>
+	</center>
+</body>
+</html>
